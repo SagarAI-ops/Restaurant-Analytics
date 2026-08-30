@@ -116,8 +116,9 @@ function convert(qty, fromUnitId, toUnitId, ingredientId = null) {
     throw new ValidationError('Invalid unit', { fromUnitId, toUnitId });
   }
   
-  // Check dimension compatibility
-  if (fromUnit.dimension !== toUnit.dimension) {
+  // Check dimension compatibility - skip for ingredient-specific conversions
+  // Ingredient-specific conversions can bridge dimensions (e.g., carton→ml for milk)
+  if (!ingredientId && fromUnit.dimension !== toUnit.dimension) {
     throw new ValidationError('UNIT_DIMENSION_MISMATCH', {
       fromDimension: fromUnit.dimension,
       toDimension: toUnit.dimension,
