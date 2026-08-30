@@ -165,6 +165,8 @@ CREATE TABLE IF NOT EXISTS stock_movements (
     batch_number TEXT,
     expiry_date DATE,
     location_id INTEGER REFERENCES locations(id),
+    shift TEXT CHECK(shift IN ('morning', 'evening', 'night')) DEFAULT 'evening',
+    reason TEXT,
     created_by INTEGER REFERENCES users(id),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
